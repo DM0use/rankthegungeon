@@ -65,7 +65,7 @@ export default function VotePage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="text-gray-400 animate-pulse">Loading matchup...</div>
+        <div className="text-g-muted animate-pulse">Loading matchup...</div>
       </div>
     )
   }
@@ -74,7 +74,7 @@ export default function VotePage() {
     return (
       <div className="flex flex-col items-center gap-4 h-64 justify-center">
         <p className="text-red-400">{error}</p>
-        <button onClick={fetchPair} className="px-4 py-2 bg-yellow-400 text-gray-950 rounded font-medium">
+        <button onClick={fetchPair} className="px-4 py-2 bg-g-orange text-g-bg rounded font-medium cursor-pointer">
           Try again
         </button>
       </div>
@@ -84,12 +84,12 @@ export default function VotePage() {
   return (
     <div className="flex flex-col items-center gap-8">
       <div className="text-center">
-        <h2 className="text-2xl font-bold text-gray-100">Which is better?</h2>
-        <p className="text-gray-400 text-sm mt-1">Click an item to vote for it</p>
+        <h2 className="text-2xl font-bold text-g-text">Which is better?</h2>
+        <p className="text-g-muted text-sm mt-1">Click an item to vote for it</p>
       </div>
 
       {lastResult && (
-        <p className="text-sm text-green-400">
+        <p className="text-sm text-g-cyan">
           Vote recorded! ELO updated.
         </p>
       )}
@@ -106,7 +106,7 @@ export default function VotePage() {
                 keyHint="J"
               />
             </div>
-            <div className="flex items-center justify-center text-gray-600 text-3xl font-bold py-2 md:py-0">
+            <div className="flex items-center justify-center text-g-dim text-3xl font-bold py-2 md:py-0">
               VS
             </div>
             <div className="flex-1">
@@ -125,9 +125,9 @@ export default function VotePage() {
       <button
         onClick={() => { setLastResult(null); fetchPair() }}
         disabled={voting}
-        className="relative w-full max-w-3xl py-3 rounded-2xl border-2 bg-gray-900 border-gray-700 hover:border-yellow-400 hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-150 cursor-pointer text-sm font-medium text-gray-400 hover:text-gray-100"
+        className="relative w-full max-w-3xl py-3 rounded-2xl border-2 bg-g-surface border-g-border hover:border-g-orange hover:bg-g-surface-hover disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-150 cursor-pointer text-sm font-medium text-g-muted hover:text-g-text"
       >
-        <span className="absolute top-1/2 -translate-y-1/2 right-3 px-2 h-6 flex items-center justify-center rounded border border-gray-600 bg-gray-800 text-gray-400 text-xs font-bold">
+        <span className="absolute top-1/2 -translate-y-1/2 right-3 px-2 h-6 flex items-center justify-center rounded border border-g-border bg-g-bg text-g-muted text-xs font-bold">
           ⎵
         </span>
         Skip this matchup

@@ -1,8 +1,21 @@
 @import "tailwindcss";
 
+@theme {
+  --color-g-bg:             #08060f;
+  --color-g-surface:        #110d20;
+  --color-g-surface-hover:  #1c1535;
+  --color-g-border:         #2a1d48;
+  --color-g-border-subtle:  #160f2a;
+  --color-g-orange:         #F5A623;
+  --color-g-cyan:           #05ffff;
+  --color-g-text:           #ede8ff;
+  --color-g-muted:          #a896c8;
+  --color-g-dim:            #6b5490;
+}
+
 @layer base {
   body {
-    @apply bg-gray-950 text-gray-100 m-0;
+    @apply bg-g-bg text-g-text m-0;
     font-family: system-ui, sans-serif;
   }
 }

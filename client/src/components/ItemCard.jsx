@@ -8,9 +8,9 @@ const QUALITY_ICONS = {
 }
 
 const TYPE_COLORS = {
-  Gun:     'bg-purple-700 text-purple-100',
-  Active:  'bg-blue-700 text-blue-100',
-  Passive: 'bg-teal-700 text-teal-100',
+  Gun:     'bg-[#2d1a52] text-[#c4a8ff]',
+  Active:  'bg-[#052828] text-[#05ffff]',
+  Passive: 'bg-[#1a2d1a] text-[#4dff9a]',
 }
 
 export default function ItemCard({ item, onVote, disabled, active, keyHint }) {
@@ -23,14 +23,14 @@ export default function ItemCard({ item, onVote, disabled, active, keyHint }) {
       disabled={disabled}
       className={`
         group relative w-full h-full flex flex-col items-center gap-4 p-6 rounded-2xl border-2
-        ${active ? 'border-yellow-400 bg-gray-800' : 'bg-gray-900 border-gray-700'}
-        hover:border-yellow-400 hover:bg-gray-800
+        ${active ? 'border-g-orange bg-g-surface-hover' : 'bg-g-surface border-g-border'}
+        hover:border-g-orange hover:bg-g-surface-hover
         disabled:opacity-50 disabled:cursor-not-allowed
         transition-all duration-150 cursor-pointer
       `}
     >
       {keyHint && (
-        <span className="absolute top-3 right-3 w-6 h-6 flex items-center justify-center rounded border border-gray-600 bg-gray-800 text-gray-400 text-xs font-bold uppercase">
+        <span className="absolute top-3 right-3 w-6 h-6 flex items-center justify-center rounded border border-g-border bg-g-surface text-g-muted text-xs font-bold uppercase">
           {keyHint}
         </span>
       )}
@@ -52,25 +52,25 @@ export default function ItemCard({ item, onVote, disabled, active, keyHint }) {
           className="w-6 h-6 object-contain"
           style={{ imageRendering: 'pixelated' }}
         />
-        <span className={`text-xs font-medium px-2 py-0.5 rounded ${TYPE_COLORS[itemType] ?? 'bg-gray-700 text-gray-300'}`}>
+        <span className={`text-xs font-medium px-2 py-0.5 rounded ${TYPE_COLORS[itemType] ?? 'bg-g-surface text-g-muted'}`}>
           {itemType}
         </span>
         {item.dlc && item.dlc !== 'base' && (
-          <span className="text-xs px-2 py-0.5 rounded bg-indigo-800 text-indigo-200">
+          <span className="text-xs px-2 py-0.5 rounded bg-[#1a1040] text-[#a080ff]">
             DLC
           </span>
         )}
       </div>
 
       <div className="text-center">
-        <p className={`text-lg font-semibold transition-colors ${active ? 'text-yellow-400' : 'text-gray-100 group-hover:text-yellow-400'}`}>
+        <p className={`text-lg font-semibold transition-colors ${active ? 'text-g-orange' : 'text-g-text group-hover:text-g-orange'}`}>
           {item.name}
         </p>
         {item.quote && (
-          <p className="text-sm text-gray-400 italic mt-1">"{item.quote}"</p>
+          <p className="text-sm text-g-muted italic mt-1">"{item.quote}"</p>
         )}
         {item.effect && (
-          <p className="text-sm text-gray-300 mt-2 leading-snug line-clamp-2">{item.effect}</p>
+          <p className="text-sm text-g-muted mt-2 leading-snug line-clamp-2">{item.effect}</p>
         )}
       </div>
     </button>

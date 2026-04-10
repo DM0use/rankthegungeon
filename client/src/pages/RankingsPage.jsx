@@ -48,8 +48,8 @@ function FilterGroup({ label, options, selected, onChange, labelMap = {}, iconMa
   return (
     <div>
       <div className="flex items-center justify-between mb-2">
-        <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider">{label}</span>
-        <button onClick={toggleAll} className="text-xs text-yellow-400 hover:underline">
+        <span className="text-xs font-semibold text-g-muted uppercase tracking-wider">{label}</span>
+        <button onClick={toggleAll} className="text-xs text-g-orange hover:underline cursor-pointer">
           {selected.length === options.length ? 'None' : 'All'}
         </button>
       </div>
@@ -60,11 +60,11 @@ function FilterGroup({ label, options, selected, onChange, labelMap = {}, iconMa
               type="checkbox"
               checked={selected.includes(opt)}
               onChange={() => toggle(opt)}
-              className="accent-yellow-400"
+              className="accent-[#F5A623]"
             />
             {iconMap[opt]
               ? <img src={iconMap[opt]} alt={opt} title={opt} className="w-5 h-5 object-contain" style={{ imageRendering: 'pixelated' }} />
-              : <span className="text-sm text-gray-300">{labelMap[opt] ?? opt}</span>
+              : <span className="text-sm text-g-text">{labelMap[opt] ?? opt}</span>
             }
           </label>
         ))}
@@ -158,11 +158,9 @@ export default function RankingsPage() {
 
   return (
     <div className="flex flex-col gap-6">
-      <h2 className="text-2xl font-bold">Rankings</h2>
-
-      {/* Filters */}
+{/* Filters */}
       {filters && (
-        <div className="bg-gray-900 border border-gray-800 rounded-xl p-4 grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="bg-g-surface border border-g-border rounded-xl p-4 grid grid-cols-1 md:grid-cols-3 gap-4">
           <FilterGroup
             label="Type"
             options={['Gun', 'Active', 'Passive']}
@@ -188,12 +186,14 @@ export default function RankingsPage() {
 
       {/* Table */}
       {loading ? (
-        <div className="text-gray-400 animate-pulse py-8 text-center">Loading rankings...</div>
+        <div className="flex items-center justify-center h-64">
+          <div className="text-g-muted animate-pulse">Loading rankings...</div>
+        </div>
       ) : (
-        <div className="overflow-x-auto rounded-xl border border-gray-800">
+        <div className="overflow-x-auto rounded-xl border border-g-border">
           <table className="w-full text-sm">
             <thead>
-              <tr className="bg-gray-900 text-gray-400 text-left">
+              <tr className="bg-g-surface text-g-muted text-left">
                 <th className="px-4 py-3 w-12">#</th>
                 <th className="px-4 py-3 w-12"></th>
                 <th className="px-4 py-3">Name</th>
@@ -208,9 +208,9 @@ export default function RankingsPage() {
               {items.map((item, i) => (
                 <tr
                   key={item._id}
-                  className="border-t border-gray-800 hover:bg-gray-900 transition-colors"
+                  className="border-t border-g-border hover:bg-g-surface transition-colors"
                 >
-                  <td className="px-4 py-3 text-gray-500 font-mono">{i + 1}</td>
+                  <td className="px-4 py-3 text-g-dim font-mono">{i + 1}</td>
                   <td className="px-4 py-3">
                     <img
                       src={item.img}
@@ -219,26 +219,23 @@ export default function RankingsPage() {
                       style={{ imageRendering: 'pixelated' }}
                     />
                   </td>
-                  <td className="px-4 py-3 font-medium text-gray-100">{item.name}</td>
+                  <td className="px-4 py-3 font-medium text-g-text">{item.name}</td>
                   <td className="px-4 py-3">
                     <QualityIcon quality={item.quality} size={6} />
                   </td>
-                  <td className="px-4 py-3 text-gray-400">
+                  <td className="px-4 py-3 text-g-muted">
                     {(item.itemType === 'Active' || item.itemType === 'Passive') ? item.itemType : 'Gun'}
                   </td>
-                  <td className="px-4 py-3 text-gray-400">{DLC_LABELS[item.dlc] ?? item.dlc}</td>
-                  <td className="px-4 py-3 text-right font-mono text-yellow-400">
+                  <td className="px-4 py-3 text-g-muted">{DLC_LABELS[item.dlc] ?? item.dlc}</td>
+                  <td className="px-4 py-3 text-right font-mono text-g-orange">
                     {item.elo != null ? Math.round(item.elo) : 1000}
-                    {item.count < 5 && (
-                      <span className="ml-1 text-gray-600 text-xs" title="Needs more votes">?</span>
-                    )}
                   </td>
-                  <td className="px-4 py-3 text-right text-gray-400">{item.count ?? 0}</td>
+                  <td className="px-4 py-3 text-right text-g-muted">{item.count ?? 0}</td>
                 </tr>
               ))}
               {items.length === 0 && (
                 <tr>
-                  <td colSpan={8} className="px-4 py-8 text-center text-gray-500">
+                  <td colSpan={8} className="px-4 py-8 text-center text-g-muted">
                     No items match the current filters.
                   </td>
                 </tr>
@@ -250,13 +247,13 @@ export default function RankingsPage() {
 
       {/* Sentinel — triggers loadMore when scrolled into view */}
       {!loading && items.length < total && (
-        <div ref={sentinelRef} className="py-4 text-center text-gray-500 text-sm">
+        <div ref={sentinelRef} className="py-4 text-center text-g-muted text-sm">
           {loadingMore ? 'Loading more...' : ''}
         </div>
       )}
 
       {!loading && items.length > 0 && items.length >= total && (
-        <p className="text-center text-gray-600 text-sm pb-4">
+        <p className="text-center text-g-dim text-sm pb-4">
           Showing all {total} items
         </p>
       )}
