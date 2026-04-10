@@ -70,7 +70,7 @@ export default function ItemCard({ item, onVote, disabled, active, keyHint }) {
           <p className="text-sm text-g-muted italic mt-1">"{item.quote}"</p>
         )}
         {item.effect && (
-          <p className="text-sm text-g-muted mt-2 leading-snug line-clamp-2">{item.effect}</p>
+          <p className="text-sm text-g-muted mt-2 leading-snug">{item.effect}</p>
         )}
       </div>
     </button>
