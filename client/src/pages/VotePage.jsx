@@ -7,6 +7,7 @@ export default function VotePage() {
   const [voting, setVoting] = useState(false)
   const [error, setError] = useState(null)
   const [lastResult, setLastResult] = useState(null)
+  const [activeCard, setActiveCard] = useState(null)
 
   const fetchPair = useCallback(async () => {
     setLoading(true)
@@ -24,6 +25,23 @@ export default function VotePage() {
   }, [])
 
   useEffect(() => { fetchPair() }, [fetchPair])
+
+  useEffect(() => {
+    function handleKey(e) {
+      if (voting || !pair) return
+      if (e.key === 'j') {
+        setActiveCard('left')
+        setTimeout(() => { setActiveCard(null); handleVote(pair.itemA._id, pair.itemB._id) }, 150)
+      }
+      if (e.key === 'l') {
+        setActiveCard('right')
+        setTimeout(() => { setActiveCard(null); handleVote(pair.itemB._id, pair.itemA._id) }, 150)
+      }
+      if (e.key === ' ') { e.preventDefault(); setLastResult(null); fetchPair() }
+    }
+    window.addEventListener('keydown', handleKey)
+    return () => window.removeEventListener('keydown', handleKey)
+  }, [voting, pair, fetchPair])
 
   async function handleVote(winnerId, loserId) {
     setVoting(true)
@@ -84,6 +102,8 @@ export default function VotePage() {
                 item={pair.itemA}
                 onVote={() => handleVote(pair.itemA._id, pair.itemB._id)}
                 disabled={voting}
+                active={activeCard === 'left'}
+                keyHint="J"
               />
             </div>
             <div className="flex items-center justify-center text-gray-600 text-3xl font-bold py-2 md:py-0">
@@ -94,6 +114,8 @@ export default function VotePage() {
                 item={pair.itemB}
                 onVote={() => handleVote(pair.itemB._id, pair.itemA._id)}
                 disabled={voting}
+                active={activeCard === 'right'}
+                keyHint="L"
               />
             </div>
           </>
@@ -103,8 +125,11 @@ export default function VotePage() {
       <button
         onClick={() => { setLastResult(null); fetchPair() }}
         disabled={voting}
-        className="text-sm text-gray-500 hover:text-gray-300 transition-colors underline"
+        className="relative w-full max-w-3xl py-3 rounded-2xl border-2 bg-gray-900 border-gray-700 hover:border-yellow-400 hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-150 cursor-pointer text-sm font-medium text-gray-400 hover:text-gray-100"
       >
+        <span className="absolute top-1/2 -translate-y-1/2 right-3 px-2 h-6 flex items-center justify-center rounded border border-gray-600 bg-gray-800 text-gray-400 text-xs font-bold">
+          ⎵
+        </span>
         Skip this matchup
       </button>
     </div>

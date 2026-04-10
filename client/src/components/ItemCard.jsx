@@ -13,7 +13,7 @@ const TYPE_COLORS = {
   Passive: 'bg-teal-700 text-teal-100',
 }
 
-export default function ItemCard({ item, onVote, disabled }) {
+export default function ItemCard({ item, onVote, disabled, active, keyHint }) {
   const qualityIcon = QUALITY_ICONS[item.quality] ?? QUALITY_ICONS['N/A']
   const itemType = (item.itemType === 'Active' || item.itemType === 'Passive') ? item.itemType : 'Gun'
 
@@ -22,18 +22,24 @@ export default function ItemCard({ item, onVote, disabled }) {
       onClick={onVote}
       disabled={disabled}
       className={`
-        group w-full flex flex-col items-center gap-4 p-6 rounded-2xl border-2
-        bg-gray-900 border-gray-700
+        group relative w-full h-full flex flex-col items-center gap-4 p-6 rounded-2xl border-2
+        ${active ? 'border-yellow-400 bg-gray-800' : 'bg-gray-900 border-gray-700'}
         hover:border-yellow-400 hover:bg-gray-800
         disabled:opacity-50 disabled:cursor-not-allowed
         transition-all duration-150 cursor-pointer
       `}
     >
-      <div className="w-32 h-32 flex items-center justify-center">
+      {keyHint && (
+        <span className="absolute top-3 right-3 w-6 h-6 flex items-center justify-center rounded border border-gray-600 bg-gray-800 text-gray-400 text-xs font-bold uppercase">
+          {keyHint}
+        </span>
+      )}
+
+      <div className="w-[85px] h-[85px] flex items-center justify-center">
         <img
           src={item.img}
           alt={item.name}
-          className="max-w-full max-h-full object-contain"
+          className="w-full h-full object-contain"
           style={{ imageRendering: 'pixelated' }}
         />
       </div>
@@ -57,14 +63,14 @@ export default function ItemCard({ item, onVote, disabled }) {
       </div>
 
       <div className="text-center">
-        <p className="text-lg font-semibold text-gray-100 group-hover:text-yellow-400 transition-colors">
+        <p className={`text-lg font-semibold transition-colors ${active ? 'text-yellow-400' : 'text-gray-100 group-hover:text-yellow-400'}`}>
           {item.name}
         </p>
         {item.quote && (
           <p className="text-sm text-gray-400 italic mt-1">"{item.quote}"</p>
         )}
         {item.effect && (
-          <p className="text-sm text-gray-300 mt-2 leading-snug">{item.effect}</p>
+          <p className="text-sm text-gray-300 mt-2 leading-snug line-clamp-2">{item.effect}</p>
         )}
       </div>
     </button>
