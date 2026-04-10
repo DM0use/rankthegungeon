@@ -1,5 +1,4 @@
 const router = require('express').Router()
-const mongoose = require('mongoose')
 const Item = require('../models/Item')
 const VoteMatch = require('../models/VoteMatch')
 const { computeElo } = require('../lib/elo')
@@ -11,7 +10,7 @@ router.post('/', async (req, res) => {
   if (!winnerId || !loserId) {
     return res.status(400).json({ error: 'winnerId and loserId are required' })
   }
-  if (!mongoose.Types.ObjectId.isValid(winnerId) || !mongoose.Types.ObjectId.isValid(loserId)) {
+  if (isNaN(parseInt(winnerId, 10)) || isNaN(parseInt(loserId, 10))) {
     return res.status(400).json({ error: 'Invalid item ID' })
   }
 

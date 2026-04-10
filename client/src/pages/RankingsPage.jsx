@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
+import { apiUrl } from '../api'
 
 const QUALITY_ORDER = ['S', 'A', 'B', 'C', 'D', 'N/A']
 const DLC_ORDER = ['base', 'sd', 'agng', 'fta']
@@ -11,12 +12,12 @@ const DLC_LABELS = {
 }
 
 const QUALITY_ICONS = {
-  S:     'https://static.wikia.nocookie.net/enterthegungeon_gamepedia/images/8/8b/1S_Quality_Item.png/revision/latest?cb=20160421180854',
-  A:     'https://static.wikia.nocookie.net/enterthegungeon_gamepedia/images/9/9c/A_Quality_Item.png/revision/latest?cb=20160421180848',
-  B:     'https://static.wikia.nocookie.net/enterthegungeon_gamepedia/images/f/f3/B_Quality_Item.png/revision/latest?cb=20160421180842',
-  C:     'https://static.wikia.nocookie.net/enterthegungeon_gamepedia/images/b/bd/C_Quality_Item.png/revision/latest?cb=20160421180835',
-  D:     'https://static.wikia.nocookie.net/enterthegungeon_gamepedia/images/6/60/D_Quality_Item.png/revision/latest?cb=20160421180829',
-  'N/A': 'https://static.wikia.nocookie.net/enterthegungeon_gamepedia/images/b/bf/N_Quality_Item.png/revision/latest?cb=20160423013136',
+  S:     '/quality/S.png',
+  A:     '/quality/A.png',
+  B:     '/quality/B.png',
+  C:     '/quality/C.png',
+  D:     '/quality/D.png',
+  'N/A': '/quality/NA.png',
 }
 
 function QualityIcon({ quality, size = 6 }) {
@@ -100,7 +101,7 @@ export default function RankingsPage() {
   }
 
   useEffect(() => {
-    fetch('/api/items/filters')
+    fetch(apiUrl('/api/items/filters'))
       .then(r => r.json())
       .then(data => {
         setFilters(data)
@@ -119,7 +120,7 @@ export default function RankingsPage() {
     setItems([])
     skipRef.current = 0
 
-    fetch(`/api/items/rankings?${buildParams(0)}`)
+    fetch(apiUrl(`/api/items/rankings?${buildParams(0)}`))
       .then(r => r.json())
       .then(data => {
         setItems(data.items)
@@ -135,7 +136,7 @@ export default function RankingsPage() {
     if (loadingMore || loading) return
     setLoadingMore(true)
 
-    fetch(`/api/items/rankings?${buildParams(skipRef.current)}`)
+    fetch(apiUrl(`/api/items/rankings?${buildParams(skipRef.current)}`))
       .then(r => r.json())
       .then(data => {
         setItems(prev => [...prev, ...data.items])

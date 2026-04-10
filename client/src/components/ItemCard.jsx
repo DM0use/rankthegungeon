@@ -1,10 +1,10 @@
 const QUALITY_ICONS = {
-  S:     'https://static.wikia.nocookie.net/enterthegungeon_gamepedia/images/8/8b/1S_Quality_Item.png/revision/latest?cb=20160421180854',
-  A:     'https://static.wikia.nocookie.net/enterthegungeon_gamepedia/images/9/9c/A_Quality_Item.png/revision/latest?cb=20160421180848',
-  B:     'https://static.wikia.nocookie.net/enterthegungeon_gamepedia/images/f/f3/B_Quality_Item.png/revision/latest?cb=20160421180842',
-  C:     'https://static.wikia.nocookie.net/enterthegungeon_gamepedia/images/b/bd/C_Quality_Item.png/revision/latest?cb=20160421180835',
-  D:     'https://static.wikia.nocookie.net/enterthegungeon_gamepedia/images/6/60/D_Quality_Item.png/revision/latest?cb=20160421180829',
-  'N/A': 'https://static.wikia.nocookie.net/enterthegungeon_gamepedia/images/b/bf/N_Quality_Item.png/revision/latest?cb=20160423013136',
+  S:     '/quality/S.png',
+  A:     '/quality/A.png',
+  B:     '/quality/B.png',
+  C:     '/quality/C.png',
+  D:     '/quality/D.png',
+  'N/A': '/quality/NA.png',
 }
 
 const TYPE_COLORS = {
@@ -30,7 +30,7 @@ export default function ItemCard({ item, onVote, disabled, active, keyHint }) {
       `}
     >
       {keyHint && (
-        <span className="absolute top-3 right-3 w-6 h-6 flex items-center justify-center rounded border border-g-border bg-g-surface text-g-muted text-xs font-bold uppercase">
+        <span className="absolute top-3 right-3 w-6 h-6 hidden md:flex items-center justify-center rounded border border-g-border bg-g-surface text-g-muted text-xs font-bold uppercase">
           {keyHint}
         </span>
       )}

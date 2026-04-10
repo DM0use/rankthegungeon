@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import ItemCard from '../components/ItemCard'
+import { apiUrl } from '../api'
 
 export default function VotePage() {
   const [pair, setPair] = useState(null)
@@ -13,7 +14,7 @@ export default function VotePage() {
     setLoading(true)
     setError(null)
     try {
-      const res = await fetch('/api/items/pair')
+      const res = await fetch(apiUrl('/api/items/pair'))
       if (!res.ok) throw new Error('Failed to fetch pair')
       const data = await res.json()
       setPair(data)
@@ -46,7 +47,7 @@ export default function VotePage() {
   async function handleVote(winnerId, loserId) {
     setVoting(true)
     try {
-      const res = await fetch('/api/vote', {
+      const res = await fetch(apiUrl('/api/vote'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ winnerId, loserId }),
@@ -82,19 +83,13 @@ export default function VotePage() {
   }
 
   return (
-    <div className="flex flex-col items-center gap-8">
+    <div className="flex flex-col items-center gap-4 md:gap-8">
       <div className="text-center">
         <h2 className="text-2xl font-bold text-g-text">Which is better?</h2>
-        <p className="text-g-muted text-sm mt-1">Click an item to vote for it</p>
+        <p className="hidden md:block text-g-muted text-sm mt-1">Click an item to vote for it</p>
       </div>
 
-      {lastResult && (
-        <p className="text-sm text-g-cyan">
-          Vote recorded! ELO updated.
-        </p>
-      )}
-
-      <div className="flex flex-col md:flex-row items-stretch gap-4 w-full max-w-3xl">
+      <div className="flex flex-col md:flex-row items-stretch gap-2 md:gap-4 w-full max-w-3xl">
         {pair && (
           <>
             <div className="flex-1">
@@ -127,11 +122,15 @@ export default function VotePage() {
         disabled={voting}
         className="relative w-full max-w-3xl py-3 rounded-2xl border-2 bg-g-surface border-g-border hover:border-g-orange hover:bg-g-surface-hover hover:shadow-[0_0_24px_rgba(245,166,35,0.15)] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-150 cursor-pointer text-sm font-medium text-g-muted hover:text-g-text"
       >
-        <span className="absolute top-1/2 -translate-y-1/2 right-3 px-2 h-6 flex items-center justify-center rounded border border-g-border bg-g-bg text-g-muted text-xs font-bold">
+        <span className="absolute top-1/2 -translate-y-1/2 right-3 px-2 h-6 hidden md:flex items-center justify-center rounded border border-g-border bg-g-bg text-g-muted text-xs font-bold">
           ⎵
         </span>
         Skip this matchup
       </button>
+
+      <p className="text-sm text-g-cyan h-5">
+        {lastResult ? 'Vote recorded! ELO updated.' : ''}
+      </p>
     </div>
   )
 }
