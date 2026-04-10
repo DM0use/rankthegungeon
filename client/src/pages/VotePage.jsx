@@ -106,7 +106,7 @@ export default function VotePage() {
                 keyHint="J"
               />
             </div>
-            <div className="flex items-center justify-center text-g-dim text-3xl font-bold py-2 md:py-0">
+            <div className="flex items-center justify-center text-g-cyan text-3xl font-bold py-2 md:py-0" style={{ textShadow: '0 0 18px rgba(5,255,255,0.4)' }}>
               VS
             </div>
             <div className="flex-1">
@@ -125,7 +125,7 @@ export default function VotePage() {
       <button
         onClick={() => { setLastResult(null); fetchPair() }}
         disabled={voting}
-        className="relative w-full max-w-3xl py-3 rounded-2xl border-2 bg-g-surface border-g-border hover:border-g-orange hover:bg-g-surface-hover disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-150 cursor-pointer text-sm font-medium text-g-muted hover:text-g-text"
+        className="relative w-full max-w-3xl py-3 rounded-2xl border-2 bg-g-surface border-g-border hover:border-g-orange hover:bg-g-surface-hover hover:shadow-[0_0_24px_rgba(245,166,35,0.15)] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-150 cursor-pointer text-sm font-medium text-g-muted hover:text-g-text"
       >
         <span className="absolute top-1/2 -translate-y-1/2 right-3 px-2 h-6 flex items-center justify-center rounded border border-g-border bg-g-bg text-g-muted text-xs font-bold">
           ⎵

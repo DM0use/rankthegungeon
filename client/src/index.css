@@ -15,7 +15,12 @@
 
 @layer base {
   body {
-    @apply bg-g-bg text-g-text m-0;
+    @apply text-g-text m-0;
     font-family: system-ui, sans-serif;
+    background:
+      radial-gradient(ellipse at 60% 0%, #2a0d5e 0%, transparent 55%),
+      radial-gradient(ellipse at 20% 30%, #1a0840 0%, transparent 45%),
+      #08060f;
+    min-height: 100vh;
   }
 }

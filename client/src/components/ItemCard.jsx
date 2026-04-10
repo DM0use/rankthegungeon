@@ -24,7 +24,7 @@ export default function ItemCard({ item, onVote, disabled, active, keyHint }) {
       className={`
         group relative w-full h-full flex flex-col items-center gap-4 p-6 rounded-2xl border-2
         ${active ? 'border-g-orange bg-g-surface-hover' : 'bg-g-surface border-g-border'}
-        hover:border-g-orange hover:bg-g-surface-hover
+        hover:border-g-orange hover:bg-g-surface-hover hover:shadow-[0_0_24px_rgba(245,166,35,0.15)]
         disabled:opacity-50 disabled:cursor-not-allowed
         transition-all duration-150 cursor-pointer
       `}
