@@ -1,4 +1,5 @@
 const router = require('express').Router()
+const mongoose = require('mongoose')
 const Item = require('../models/Item')
 const VoteMatch = require('../models/VoteMatch')
 const { computeElo } = require('../lib/elo')
@@ -9,6 +10,9 @@ router.post('/', async (req, res) => {
   const { winnerId, loserId } = req.body
   if (!winnerId || !loserId) {
     return res.status(400).json({ error: 'winnerId and loserId are required' })
+  }
+  if (!mongoose.Types.ObjectId.isValid(winnerId) || !mongoose.Types.ObjectId.isValid(loserId)) {
+    return res.status(400).json({ error: 'Invalid item ID' })
   }
 
   try {
@@ -57,7 +61,8 @@ router.post('/', async (req, res) => {
       nextPair: { itemA: nextItems[0], itemB: nextItems[1] },
     })
   } catch (err) {
-    res.status(500).json({ error: err.message })
+    console.error('Vote error:', err)
+    res.status(500).json({ error: 'Internal server error' })
   }
 })
 
