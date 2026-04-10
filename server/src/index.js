@@ -6,7 +6,13 @@ const rateLimit = require('express-rate-limit')
 
 const app = express()
 
-app.use(cors({ origin: process.env.CORS_ORIGIN }))
+const allowedOrigins = process.env.CORS_ORIGIN
+  ? process.env.CORS_ORIGIN.split(',').map(o => o.trim())
+  : []
+
+app.use(cors({
+  origin: allowedOrigins.length === 1 ? allowedOrigins[0] : allowedOrigins,
+}))
 app.use(express.json())
 
 app.use('/api/items', require('./routes/items'))

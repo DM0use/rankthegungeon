@@ -9,6 +9,7 @@ export default function VotePage() {
   const [error, setError] = useState(null)
   const [lastResult, setLastResult] = useState(null)
   const [activeCard, setActiveCard] = useState(null)
+  const [activeSkip, setActiveSkip] = useState(false)
 
   const fetchPair = useCallback(async () => {
     setLoading(true)
@@ -38,7 +39,11 @@ export default function VotePage() {
         setActiveCard('right')
         setTimeout(() => { setActiveCard(null); handleVote(pair.itemB._id, pair.itemA._id) }, 150)
       }
-      if (e.key === ' ') { e.preventDefault(); setLastResult(null); fetchPair() }
+      if (e.key === ' ') {
+        e.preventDefault()
+        setActiveSkip(true)
+        setTimeout(() => { setActiveSkip(false); setLastResult(null); fetchPair() }, 150)
+      }
     }
     window.addEventListener('keydown', handleKey)
     return () => window.removeEventListener('keydown', handleKey)
@@ -120,7 +125,7 @@ export default function VotePage() {
       <button
         onClick={() => { setLastResult(null); fetchPair() }}
         disabled={voting}
-        className="relative w-full max-w-3xl py-3 rounded-2xl border-2 bg-g-surface border-g-border hover:border-g-orange hover:bg-g-surface-hover hover:shadow-[0_0_24px_rgba(245,166,35,0.15)] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-150 cursor-pointer text-sm font-medium text-g-muted hover:text-g-text"
+        className={`relative w-full max-w-3xl py-3 rounded-2xl border-2 transition-all duration-150 cursor-pointer text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-[0_0_24px_rgba(245,166,35,0.15)] ${activeSkip ? 'border-g-orange bg-g-surface-hover text-g-text' : 'bg-g-surface border-g-border hover:border-g-orange hover:bg-g-surface-hover text-g-muted hover:text-g-text'}`}
       >
         <span className="absolute top-1/2 -translate-y-1/2 right-3 px-2 h-6 hidden md:flex items-center justify-center rounded border border-g-border bg-g-bg text-g-muted text-xs font-bold">
           ⎵
